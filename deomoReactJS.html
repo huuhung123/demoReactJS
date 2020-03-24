@@ -1,0 +1,504 @@
+<!--  REACT, REDUX, REDUX-SAGA, RECT HOOK
+INTRODUCTION
+   - A JS library for building user interfaces (facebook)
+   - React is used to build single page applications.
+   - SPA frameworks: Backbone -> Ember -> Angular -> React -> Vue
+   - React allows us to create reusable UI components.
+-->
+
+<!-- 
+    SINGLE PAGE APPLICATION     <==>       MULTIPLE PAGE APPLICAATION
+       Initial Request                         Initial Request  
+       -------------->                        -------------->      
+           HTML                                     HTML
+Client <--------------  Server        Client  <--------------  Server 
+           AJAX                                   FORM POST
+       -------------->                        -------------->
+           JSON                                     HTML
+       <--------------                        <--------------  
+--> 
+
+<!-- 
+JSON:JSON viết tắt bởi JavaScript Object Notation. Dịch nôm na thì nó là "Kí hiệu object trong JavaScript".b. 
+Khi một client gửi request lên server thì server có thể gửi kết quả trả về dạng JSON (hoặc XML). 
+Client bóc tách kết quả đó và dựa vào key để lấy ra thông tin cần thiết. Việc sử dụng JSON thay vì XML giúp 
+giảm thời gian truy xuất dữ liệu và giảm dung lượng gói tin. Quay lại ví dụ trên, nếu tôi dùng XML để biểu diễn thì nó sẽ như sau:
+{
+ "type": "laptop",
+ "brand": "Sony",
+ "operating system": "Windows 7",
+ "graphic card": "NVIDIA"
+}
+<type> laptop </type>
+<brand> Sony </brand>
+<operatin_system> Windows 7 </operating_system>
+<graphic_card> NVIDIA </graphic_card>
+
+Điều đó đồng nghĩa với việc nếu bạn muốn chỉnh sửa JSON thì có thể convert nó thành Object để sửa đổi các thuộc tính, giá trị. 
+Sau đó convert JavaScript Object đó ngược lại thành JSON.JSON là một thành phần quan trọng dùng để lưu trữ dữ liệu và là chuẩn giao 
+tiếp giữa client và server.
+-->
+
+<!-- 
+IMPORT, EXPORT
+- Named Export: (export)
+     export class App extends Component .... // export default App
+     export default class App extennds Component ... 
+     export {   ,  }  import { , }
+Sử dụng 'as' để đặt tên khác cho named export: import { MyComponent2 as MyNewComponent } from "./MyComponent";
+import tất cả named exports vào 1 đối tượng:   import * as MainComponents from "./MyComponent";
+- Default Export: (export default) trong Javascript ES6 chỉ cho phép xuất một mặc định cho mỗi file.
+Việc đặt tên import hoàn toàn độc lập trong export default và chúng ta có thể sử dụng bất kỳ tên nào mà mình muốn.
+-->
+
+<!-- 
+CREATE-REACT-APP (https://create-react-app.dev/docs/getting-started)
+After npm, node are installed
+  - install : npm install -g create-react-app
+  - npx create-react-app nameApp (create project nameApp)
+  - cd nameApp (move to nameApp folder)
+  - npm start (run nameApp folder)
+-->
+
+<!-- 
+REACT RENDER HTML
+   - React's goal is in many ways to render HTML in a web page.
+   - React renders HTML to the web page by using a function called ReactDOM.render().The ReactDOM.render() function takes two arguments, HTML code and an HTML element.The purpose of the function is to display the specified HTML code inside the specified HTML element.
+
+   File index.js:                                                          File HTML:
+import React from 'react';                                         <body>
+import ReactDOM from 'react-dom';                                     <div id="root"></div>
+import App from './App'                                            </body>
+ReactDOM.render(<App/>, document.getElementById('root'));    
+The HTML code in this tutorial uses JSX which allows you to write HTML tags inside the JavaScript code:
+-->
+
+<!-- 
+JSX (tool: bebeljs.io )  viết theo kiểu XML, thay thế cho React.createElement(), ko phải HTML, có thể viết như HTML className, html to jsx
+   - JSX stands for JavaScript XML.
+   - JSX allows us to write HTML in React.
+   - JSX makes it easier to write and add HTML in React.
+-->
+
+<!-- 
+COMPONENT
+-->
+
+<!-- 
+PROPS: function/ES6 class, linh hoạt hơn, thuộc tính của 1 component(class), truyền data từ cha -> con, theo dạng key="value" {}, this.props.key, this.props.children
+-->
+
+<!-- 
+STYLING REACT COMPONENTS
+<h1 style = {heading} >Inline </h1>
+const heading = {fontSize: '72px', color: 'blue'}
+
+getStyle = () => { return { background: '#f4f4f4', padding: '10px'}}
+<div style = {this.style()}>
+-->
+
+
+<!-- METHOD AS PROPS-->
+
+<!--
+STATE: là trạng thái của component, khai báo những private value của conponent đó
+Tao state tại constructor. Gọi this.state = {key: value, key1: value1, ...}
+Gọi state: this.state.key
+Thay đổi state: this.setState ({key: value, key1: value1, ....})
+When you have to update state based on the previous state value, pass in a function as an argument instead of the regular object
+Khi setState được gọi => hàm render được gọi
+          Props                             State
+       Nhận dữ liều từ bên ngoài         Dữ liệu nội bộ
+       Khoog thể thay đổi value          Có thể thay đổi value(phạm vi Private trong component)
+-->
+
+<!--
+Handing Events
+  - Hàm không có tham số
+         C1: viet kieu bt  //onClick={this.onAddToCart}
+
+  - Hàm có tham số
+      C1:   constructor(props) {
+               super(props)                                     
+               this.onAddToCart = this.onAddToCart.bind(this)   //onClick={this.onAddToCart}
+               }
+            onAddToCart() {alert(this.props.children)}
+
+      C2: Bỏ constructor:  Ở ngoài: onAddToCart = () => {...}
+      c3: Bỏ constructor:  Ở trong: onclick = { () => { this.onClick('123') } }, ở ngoài: onClick(text) {...}
+-->
+
+<!--
+RENDER A LIST
+CONDITIONAL RENDERING            
+-->
+
+<!--
+IMMUTABILITY: Khả năng k thay đổi trạng thái bên trong của 1 object(Có thể hiểu đó là tính bất biến của đối tượng.)Nếu sử dụng Immutability, bạn luôn tạo ra một bản sao của cấu trúc dữ liệu cũ và áp dụng các thay đổi cho bản sao thay vì thay đổi cấu trúc dữ liệu ban đầu. Và tác dụng lớn nhất của việc sử dụng Immutability đó chính là khiến cho việc lập trình trở nên đơn giản hơn.Trong React-Redux, rất nhiều components khác nhau làm việc với state chung của ứng dụng và các components đó hoạt động cùng lúc nên sử dụng Immutability với state là cách tốt nhất để theo dõi hoạt động của nó.(npm immutable)
+
+- var b = [1, 2, 3];
+ ->var c =[].concat(b, 4)
+       c = [...b, 4]
+       c = [4].concat(b)
+       c = [4, ...b]
+       c = [...b.slice(0,2), 4, ...b.slice(2)](1, 2, 4, 3)
+
+       var obj = {name: 'Minh', gfs: ['Trang', 'Huong']}
+    C1:   c = Object.assign({}, obj)  //copy object
+       c.name = 'Thong 
+    C2: c = {...obj, name:'Thong'}
+      //obj ko thay doi
+    C1 VS C2: shallow copy: chỉ lước qua key ở level 1, ko đi sâu vào trong <==> deep copy
+    obj.gfs.push('Mo') thì c thay đổi theo
+
+    var dat = {...obj, name: 'Dat', gfs: [...obj.gfs,'Lan']} //Đạt có 4, nhưng object chỉ có 3
+
+    primitive type: immutable sẵn, chỉ có reference type(array, object)
+   -->
+
+<!--
+REACT: 
+đường dẫn trên link, phần nội dung bị thay đổi: exact, component, path
+Link, NavLink(có activeStyle ={{...}}, activeClassName): SPA : <Link to  exact className="..", customLink: copy
+Có route và ko có link, có link và k có route (path, exact, component(render))
+NotFound, -> bao bọc route trong switch
+Tách file: Menu(1 mảng (name, to, exact)), Routes, App( cấu hình Routes)
+Lấy tham số url(đối tượng match) 
+ - main: ({match}) => <Products match={match}/> //match object (tại routes, nơi nội dung thay đổi)
+ - var { match } = this.props; match thuộc về react-router, là tham số đầu vào của hàm,, đặt tên trùng với props match lun // console.log(match); {path: "/products", url: "/products", isExact: true, params: {…}}  
+ - slug (xem ảnh) 
+Đôi tượng Prompt: xác nhận trc khi chuyển sang trang mới import { Prompt } from'react-router-dom'
+   <Prompt
+      when = {this.state.isChecked}
+      message = {location => 
+      (`Bạn chắc chắn muốn đi đến ${location.pathname}`)}
+     />
+Đối tượng Redirect(chuyển trang, có thể truy xuất được thông tin trang trước đó thông qua đối tượng location)
+-->
+
+<!-- 
+FUNCTIONAL STATELESS COMPONENT: props -> JS function -> HTML(JSX)
+ko có state và component lifecycle, đầu vào là props
+Thay cho class: cách viết dễ dàng, dễ hiểu, dễ test hơn(nhận đầu vào -> ra, vì ko chứa state), optimize perfomance, dùng khi sử dụng các thư viện state management khác(redux...)
+STATEFUL CLASS COMPONENT
+
+
+Routing bến phía client(kp server), bình thường: chuyển link, gửi lên server, lấy data về -> render, thay đổi ngay phía client mà ko có request nào gửi lên server cả
+
+import React from "react";                         export default Card2;
+import "./Card.css";                              <Card2 imageUrl="https://picsum.photos/200/350">
+                                                      <p>Card body 2</p>
+function Card2(props) {                           </Card2>
+  const { imageUrl, children } = props;
+  return (
+    <div className="card">
+      <div
+        className="card-cover"
+        style={{
+          backgroundImage: `url(${imageUrl})`
+        }}
+      />
+      <div className="card-body">{children}</div>
+    </div>
+  );
+}
+-->
+<!--
+FUNCTIONAL SETSTATE: state is asynchronous, mục đích của react là tạo ra virtual DOM, tính toán thay đổivirtual DOM, tính ra phần khác biệt và update DOM, truyền function cho setState thay vì truyền object(queue).Hàm setState chủ yếu hữu ích để mong đợi cập nhật trạng thái chính xác khi nhiều setState được kích hoạt trong một khoảng thời gian ngắn khi setState thông thường thực hiện hòa giải và có thể dẫn đến trạng thái không mong muốn.
+Tuy nhiên, có những trường hợp chúng ta cần update lại state mới dựa trên giá trị của state hiện tại, thì cách trên lại có một vấn đề.(setState là bất đồng bộ. Khi setState được gọi, React ko cập nhật DOM ngay lập tức mà nó tổng hợp lại các thay đổi rồi update thành từng mẻ để tăng hiệu năng cho việc re-render DOM- Trong ví dụ đơn giản này, có thể chúng ta chưa gặp phải vấn đề gì, tuy nhiên, khi khi ứng dụng trở lên phức tạp hơn nhiều và có nhiều nơi gọi đến setState, có khả năng, giá trị của this.state.showForm sẽ không phải thứ mà bạn nghĩ.)Nếu bạn định sử dụng setState để update component và bạn định dựa trên giá trị hiện tại của state hay props để tính toán ra giá trị mới thì việc truyền function vào setState như trên luôn là một cách nên dùng."Tôi sẽ tránh lặp lại 1 công việc 3 lần, tôi thích tạo ra 1 container và gom nhóm tất cả chúng lại để chỉ phải update 1 lần duy nhất thôi!". Và đó chính là batching. Vậy, giả sử React gặp trường hợp nhiều hàm setState() được gọi, nó sẽ thực hiện batching bằng cách merges tất cả các object được truyền vào hàm setState làm 1 object duy nhất, sau đó dùng 1 object đó cho hàm setState() thôi. Trong JavaScript, việc merge object có thể diễn ra như sau: (Và nếu có bất kỳ object nào chứa cùng key, thì value của key ở object cuối cùng sẽ được lưu lại. )
+const singleObject = Object.assign(
+  {}, 
+  objectFromSetState1, 
+  objectFromSetState2, 
+  objectFromSetState3
+);
+
+increase() {
+  this.setState(state => {                    // this.setState({value: this.state.value + 1});
+      return {                                // this.setState({value: this.state.value + 1});
+      value: state.value + 1                      
+    }
+  });
+   this.setState(state => { 
+    return {
+      value: state.value + 1
+    }
+  });
+}
+conventionalIncreaseScoreBy3 = () => {
+    this.setState({score : this.state.score + 1});
+    this.setState({score : this.state.score + 1});
+    this.setState({score : this.state.score + 1});
+  }
+
+  functionalIncreaseScoreBy3 = () => {
+    this.setState(prevState => ({ functionalScore: prevState.functionalScore + 1 }));
+    this.setState(prevState => ({ functionalScore: prevState.functionalScore + 1 }));
+    this.setState(prevState => ({ functionalScore: prevState.functionalScore + 1 }));
+  }
+-->
+
+<!--
+API:trước đây chỉ lưu trên local Storage, làm việc với API, calll API trên server và lưu trên database của server
+Chỉ là url. Quan tâm: API gọi lên là ntn?, có URL ntn?, gửi lên qt HTTP method j ??, tương ứng sẽ lấy j, có chức năng ntn, kq trả về(dữ liệu và http status code)
+
+Một số API:
+ - Có sẵn trên internet: Github API, redditAPI, Pokemon API,...
+ - Tự viết: (PHP, ASP.NET, Java, NodeJS...)
+ - API giả lập: MockAPI(cần internet), JsonServer(sẵn trên máy-ko cần internet. resources)
+ - Test API vs Postman (xem ntn)
+-->
+                  send
+<!--   React App  <----- HTTP Library ----> Server
+                                      fetch   
+<!--
+AXIOS: call API vs reactjs
+//  componentDidMount() {
+//       axios.get("http://localhost:3333/data").then(res => {
+//           this.setState({
+//               products: res.data
+//          });
+//      });
+// }
+
+App -> API -> web server -> DB
+
+HTTP STATUS CODE 
+Level 200(success)                       Level 400                             Level 500
+200: Ok                                  400: Bad Request                      500: Internal Server Error
+201: Created                             401: Unauthorized 501                 501: Not Implemented
+203: Non-Authoritative Information       403: Forbidden                        503: Service Unavailable
+204: No content                          404: Not Found                        504: Gateway Timeout
+                                         409: Conflict                         502: Bad Gateway
+                                                                               599: Network timeout 
+REST API DESIGN: Client  ->  API   ->  <- DB
+GET   /tasks  -  display all tasks
+GET   /tasks/(id) - display a task by id
+POST  /tasks  -  create a new tasks
+PUT   /tasks/(id) - update a task by id
+DELETE /tasks/(id) - delete a task by id
+-->
+                                                                           
+<!--
+COMPONENT LIFECYCLE include methods (4 step)
+- Step 1: INITIALIZATION -> set props and state
+- Step 2: MOUNTING ->    componentWillMout     render               Immediately before initial rendering
+                         componentDidMount                          Immediately after initial rendering
+- Step 3: UPDATION (5 step for props, states remove step 1)
+                        componentWillReceive Props(nextProps)       When component receives new props
+                        shouldComponentUpdate(nextProps, nextState) After receiving new props or state
+                                                                  (return false to prevent rendering)           
+                       componentWillUpdate(nextProps, nextState)  -> render            
+                       componentDidUpdate(prevProps, prevState)    After component's updates are flushed to DOM
+-Step 4: UNMOUNTING
+                       componentWillUnmount                       Immediately before removing component from DOM
+-->
+   
+<!-- 
+TRICKS
+- className = {(this.props.color === color) ? 'Active' : ''}
+- {!isCollapsed && <div className="Content">{children}</div>}
+- React Devaloper Tools: Install extend for gooogle chrome: react developer tool
+- props.children   //mặc định this.props(object).children , this.state
+- Material UI
+- ESLint: Lint là những công cụ giúp chúng ta phân tích code, từ đó đưa ra các vấn đề mà code đang gặp phải như không tuân thủ coding style, sai coding convention, 
+- Key:
+Khi muốn render nhiều component bằng hàm map(). Có thể mường tượng ra thuộc tính key có tác dụng phân biệt các component và đảm bảo các component ở đúng vị trí của nó.
+  users.map((user) => <Row user={user} key={user.id} />)
+Hãy gán key bằng id của user để nó luôn là duy nhất, nếu không thì có thể dùng index, tuy nhiên nó không được khuyến khích cho lắm.
+  users.map((user, index) => <Row user={user} key={index} />)
+
+  Virtual DOM 
+DOM là tên gọi tắt của Document Object Model (Mô hình Đối tượng Tài liệu), là một chuẩn được định nghĩa bởi W3C dùng để truy xuất và thao tác trên code HTML hay XML bằng các ngôn ngữ lập trình thông dịch (scripting language) như Javascript.Virtual DOM sử dụng key, ref mà ở DOM không có 😄 và Virtual DOM được tạo mới sau mỗi lần render lại.Tuy nhiên, sự đặc biệt của Virtual DOM nằm ở Snapshots & Diffing Như giải thích ở trước đó, cách hoạt đông của Virtual DOM trong React đó là:React lấy một snapshot của Virtual DOM (có thể hiểu là bản ghi trạng thái ngay lúc đó) ngay trước khi áp dụng bất kỳ bản cập nhật nào. Sau đó, nó sử dụng snapshot này để so sánh với một Virtual DOM được cập nhật trước khi thực hiện các thay đổi.Khi cập nhật được cấp cho Virtual DOM, quá trình tiếp theo React sử dụng thuật toán Diffing để so sánh và đối chiếu để biết được sự cập nhật được diễn ra ở đâu sau đó cập nhật nó mà bỏ qua những elements không liên quan.
+-->
+
+<!-- 
+REFS
+Trong bài viết hôm nay chúng ta sẽ cùng nhau tìm hiểu về Refs (References), đây là một tính năng cho phép React components có thể tương tác với các child element của chúng. Trong hầu hết các trường hợp, refs được sử dụng để tương tác với các UI element hay chính là các element nhận input từ người dùng. Ví dụ như một HTML form.
+
+import React, { Component } from 'react'
+class App extends Component {                                 render() {
+  constructor(props) {                                           return (
+    super(props);                                                <div className="App">
+    this.inputElement = React.createRef();                           <input type="App" ref={this.inputElement} />
+    // Là 1 object có method là curent có các methoad            </div>
+    như focus,value,... của DOM                                   )
+                                                             }
+    componentDidMount() {                                }
+       this.inputElement.current.focus()                        export default App
+      }
+  }
+-->
+
+<!-- 
+PROPTYPES: npm install --save prop-types,  import PropTypes from 'prop-types'; 
+//Component này cần cái gì
+TodoItem.propTypes = {
+    item: PropTypes.shape({
+        isComplete: PropTypes.bool.isRequired,
+        title: PropTypes.string.isRequired
+    }),
+    onClick: PropTypes.func.isRequired// hoặc ko cân(optional)
+}
+
+Truyền 1 giá trị k hợp lý => báo lỗi index.js:1 Warning: Failed prop type: Invalid prop `item isComplete` of type `number` supplied to `TodoItem`, expected `boolean`.
+-->
+
+<!--
+CLASSNAMES
+import classNames from 'classnames'
+ <div className={classNames('TodoItem', {
+                'TodoItem-complete': item.isComplete
+              })}>
+-->
+
+<!-- 
+BOOTSTRAP
+REACTSTRAP Những component, có các props(đọc)
+import { FacebookLoginButton } from "react-social-login-buttons";
+import { FaSearchPlus } from 'react-icons/fa'; //react-icon
+Codesandbox, storybook: công cụ làm việc nhóm tốt hơn, testing react vs Enzyme
+-->
+
+<!-- 
+REACT HOOKS(useState, ustContext)
+import React from 'react';
+import Counter from './components/Counter'
+import './App.css';
+//functional stateless component có thể dùng state, npm install --save react@next
+function App() {
+  return (
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+      <h2>Start aditing to see some magic happen!</h2>
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
+
+import React, { useState, useContext } from 'react'
+//count: giá trị cho state, setCount: function thay đổi state, code ngắn
+//useState, useContext
+export default function () {
+    const [count, setCount] = useState(1);
+
+    return (
+        <div>
+            <h2>{count}</h2>
+            <button onClick={() => setCount(count + 1)}>Increase</button>
+        </div>
+    )
+}
+-->
+
+<!-- 
+CONTEXT API: provide a way to pass data through the component tree without having to pass props down maunally at every level
+Step 1: Create the context
+Step 2: Provide a context value
+Step 3: Consume the context value
+Consuming Multiple Contexts
+-->
+
+<!-- 
+HIGHER ORDER COMPONENTS(HOCs) ( xem practice)
+là một kỹ thuật nâng cao trong React được sử dụng trong việc sử dụng lại các component. HOCs không là một phần trong React API. Một cách cụ thể, một higher-order component là một hàm và nó nhận đối số là một component và trả về một component mới.Higher-order component là một pattern tuyệt với và nó được chứng minh trong nhiều thư viện React ví dụ như Redux (thư viện được sử dụng để quản lý state) hay React-DnD (là một thư viện về drag and drop, nó khá khó hiểu cho người mới bắt đầu)... Code app lớn tốt hơn, tái sử dụng các logic trong components, sd các component nhỏ lắp ráp lại vs nhau
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+-->
+
+<!-- 
+RENDER PROPS: (xem practice)
+Nếu bạn đã sử dụng đến HOC thì Render Props cũng tương tự. Đây là 2 cách phổ biến nhất để xử lý những bài toán gặp nhưng component khác nhau nhưng lại có chức năng tương tự nhau.
+The term "render prop" refers to a technique for sharing code between React components using a prop whose value is a function
+-->
+
+<!-- 
+FRAGMENTS: 16.2
+Giải quyết vấn đề: khi trả về nhiều JSX tag - phải có 1 thẻ wrapper bên ngoài( thường là div, span, p)
+Hậu quả -> phả vở cấu trúc HTML, CSS -> nhiều component -> phát sinh nhiều wrapper tag
+
+Trả về mảng của các phần tử qua dấu [elements]
+Quy tắc
+  Mỗi phần tử cách nhau dấu phẩy, có 1 key, nếu là chuỗi thì nằm trong ngoặc kép
+C1: [
+  "Giới thiệu",
+  <h1 key ="1"> Lập trình React </h1>,
+  <h1 key ="2"> Lập trình Java </h1> 
+    ]
+
+C2: <React.Fragment>
+    <h1> .... </h1>
+    <h1> .... </h1>
+    </React.Fragment
+-->
+
+<!-- 
+PURE COMPONENT:Mặc dù chuyển thành dạng React.Component nhưng component vẫn sẽ re-render không cần thiết, nguyên nhân là do hàm setState sẽ luôn kích hoạt sự kiện re-render, và điều đó sẽ đôi lúc dẫn tới việc re-render không cần thiết. Việc re-render này sẽ được thực hiện ở cả component hiện tại đã thực hiện setState và component con trực tiếp của nó (kể cả props truyền xuống cho component con đó không có gì thay đổi). Giải pháp đặt ra là bạn có thể bổ sung code check props vào method shouldComponentUpdate ở component TestReactComponent để đảm bảo nó sẽ chỉ re-render mỗi khi có sự thay đổi về props. Đó cũng là cách mà PureComponent thực hiện, PureComponent cũng là 1 React.Component nhưng đã implement thêm phần logic check này.Như vậy, PureComponent đã giải quyết được vấn đề về performance vẫn tồn tại ở React.Component, đó là việc ngăn chặn sự render không cần thiết,( shallow equality).PureComponent chính xác giống như Component ngoại trừ việc đó là nó xử lý shouldComponentUpdate cho bạn.
+(Không nên thay đổi đối tượng hoặc mảng)
+
+Regular component: does not implement the shouldComponentUpdate method. It always returns true by default
+Pure component: on the other hand implements shouldComponentUpdate with a shallow props and state comparison
+
+Sallow comparision (SC)
+- Primitive Types: return true if same value and type
+- Complex Types: return true if reference the excat same object
+EX: a = [1, 2, 3], b = [1, 2, 3], c = a
+a === b: false, a === c: true
+a = {x: 1, y: 2}, b = {x: 1, y: 2}, c = a
+a === b: false, a === c: true
+-->
+
+<!-- 
+HOOKS: component types: Functional components and Class components, using state, lifecycle methods and 'this' binding
+New feature in React version 16.8 which aloow you to usr React features without having to write a class, Hooks don't work inside classes
+- Rules of Hooks: only call Hooks at the Top level, from React functions
+- useState: let you add state to functional component, the first element is the current value of the state, and the second element is a state setter function, new state value depends on the previous state vale
+- useEffect: let you perfom side effects in functional component. It is a close replacement for componentDidMout, componentDidUpdate and componentWillUnmout
+-useContext Hook
+-useReducer: is a hook that is used for state management, an alternative to useState
+
+Hooks so far:
+ - useState - state
+ - useEffect - side effects
+ - useContext - context API
+ - useReducer - reducers
+
+ reduce in JS vs useReducer in React
+ - array.reduce(reducer, initialValue)  useReducer(reducer, initialState)
+ - singleValue = reducer(accumulator, itemValue)  newState = reducer(currentState, action)
+ - reduce method return as single value   useReducer returns a pair of values [newState, dispatch]
+
+ Science is concerned with understanding fundamental laws of nature and the behaviour of materials and living things
+ Engineering involves the application of science and tachnology to create useful products and services for the whole community. within economic, environmental and resource constraints
+
+ Fundamental Software Engineering activities
+ - Software specification: define the software specification and constraints
+ - Software development: design and program the software
+ - Software validation: Check to ensure that the software is what the customer requires
+ - Software evolution: modify the software to reflect the change
+
+ Computer - System Structure: can be divided into 4 components
+ - Hardware(HW) - provides basic computing resource: CPU, memory, I/O device
+ - Operating system(OS) - controls and coordinates use of hardware among various app and user: Unix, Linux, MacOS
+ - Application programs: define the ways in which the system resources are used to solve the computing problems of the users: compilers, video games,....
+ - Users: Peple, machines, other computers
+-->
+
+
+
+  
+<!-- 
+REDUX
+-->
+
+
+
+
+
+
+
+
+
+ 
+  
